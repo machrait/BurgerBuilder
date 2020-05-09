@@ -6,12 +6,73 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 class ContactData extends Component 
 {
-	state = {
-		name: '',
-		email: '',
-		address: {
-			street: '',
-			postalCode:''
+	state = 
+	{
+		orderForm:
+		{
+			name: 
+			{
+				elementType: 'input',
+				elementConfig: 
+				{
+					type: 'text',
+					placeholder: 'Your Name'
+				},
+				value: ''
+			},
+			street: 
+			{
+				elementType: 'input',
+				elementConfig: 
+				{
+					type: 'text',
+					placeholder: 'Your Street'
+				},
+				value: ''
+			},
+			zipcode:
+			{
+				elementType: 'input',
+				elementConfig: 
+				{
+					type: 'text',
+					placeholder: 'Your Zipcode'
+				},
+				value: ''
+			},
+			country: 
+			{
+				elementType: 'input',
+				elementConfig: 
+				{
+					type: 'text',
+					placeholder: 'Your Country'
+				},
+				value: ''
+			},
+			email: 
+			{
+				elementType: 'input',
+				elementConfig: 
+				{
+					type: 'email',
+					placeholder: 'Your E-mail'
+				},
+				value: ''
+			},
+			deliveryMethod: 
+			{
+				elementType: 'select',
+				elementConfig: 
+				{
+					options:
+					[
+						{ value: 'fastest', displayValue:'Fastest'},
+						{ value: 'cheapest', displayValue:'Cheapest'}
+					]
+				},
+				value: ''
+			}
 		},
 		loading: false
 	}
@@ -24,19 +85,8 @@ class ContactData extends Component
 		const order =
 		{
 			ingredients: this.props.ingredients,
-			price: this.props.price,
-			customer: 
-			{
-				name: 'Meryem Achrait',
-				address: 
-				{
-					street: 'Lot Arreda',
-					zipcode: '454546',
-					country: 'Morocco'
-				},
-				email: 'test@mail.com'
-			},
-			deliveryMethod: 'fastest'
+			price: this.props.price
+			
 		};
 		axios.post('/orders.json',order)
 		.then(response =>	{
@@ -53,7 +103,7 @@ class ContactData extends Component
 	{
 		let form = (
 				<form>
-					<Input inputtype="input" type="text" name="name" placeholder="Your Name"/>
+					<Input elementType="..." elementConfig="..." value="..."/>
 					<Input inputtype="input" type="email" name="email" placeholder="Your Email"/>
 					<Input inputtype="input" type="text" name="street" placeholder="Your Street"/>
 					<Input inputtype="input" type="text" name="postalCode" placeholder="Your PostalCode"/>
