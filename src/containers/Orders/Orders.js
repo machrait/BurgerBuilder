@@ -20,6 +20,7 @@ class Orders extends Component
 				fechtedOrders.push({id: key, ...res.data[key]});
 			}
 			this.setState({orders: fechtedOrders, loading:false});
+			console.log(fechtedOrders);
 		}).catch(err =>
 		{
 			this.setState({loading:false});
@@ -29,10 +30,21 @@ class Orders extends Component
 
 	render() 
 	{
+		let order = this.state.orders.map(order => 
+			(
+				<Order 
+					key={order.id}
+					ingredients={order.ingredients}
+					price={order.price}/>
+			));
+		if(this.state.loading)
+		{
+			order = <p>Loading</p>;
+		}
+
 		return (
 			<div>
-				<Order/>
-				<Order/>
+				{order}
 			</div>
 		);
 	}

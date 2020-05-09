@@ -18,7 +18,7 @@ class Checkout extends Component
 		{
 			if (param[0] ==='price')
 			{
-				price= param[1];
+				price = param[1];
 			}
 			else
 			{
