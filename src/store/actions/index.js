@@ -4,9 +4,7 @@ export {
 	initIngredients
 } from './burgerBuilder';
 export {
-	//purchaseBurgerSuccess,
-	//purchaseBurgerFail,
-	//purchaseBurgerStart,
 	purchaseBurger,
-	purchaseInit
+	purchaseInit,
+	fetchOrders
 } from './order';
