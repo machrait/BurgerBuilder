@@ -41,3 +41,11 @@ export const purchaseBurger = (orderData) =>
 	};
 	
 }
+
+export const purchaseInit = () =>
+{
+	return {
+		type: actionTypes.PURHCASE_INIT
+	}
+}
+

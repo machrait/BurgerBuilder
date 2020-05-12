@@ -225,8 +225,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispath => {
 	return {
 		onOrderBurger: (orderData) => dispath(orderActions.purchaseBurger(orderData)),
-		onIngredientRemoved: (id, orderData) => dispath(orderActions.purchaseBurgerSuccess(id, orderData)),
-		onInitIngredients: (error) => dispath(orderActions.purchaseBurgerFail(error))
+	//	onIngredientRemoved: (id, orderData) => dispath(orderActions.purchaseBurgerSuccess(id, orderData)),
+	//	onInitIngredients: (error) => dispath(orderActions.purchaseBurgerFail(error))
 	}
 }
 
