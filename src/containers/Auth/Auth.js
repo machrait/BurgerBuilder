@@ -10,7 +10,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import { updateObject } from '../../shared/utility';
+import { updateObject, checkValidity } from '../../shared/utility';
 class Auth extends Component 
 {
 	state = {
@@ -54,28 +54,6 @@ class Auth extends Component
 		
 	}
 
-	checkValidity(value,rules)
-	{
-		let isValid = true; const regex = /\S+@\S+\.\S+/;
-		if(rules.required)
-		{
-			isValid = value.trim() !=='' && isValid;
-		}
-		if(rules.isEmail)
-		{
-			isValid = regex.test(value);
-		}
-		if(rules.minLength)
-		{
-			isValid = value.length >= rules.minLength && isValid;
-		}
-		if(rules.maxLength)
-		{
-			isValid = value.length <= rules.maxLength && isValid;
-		}
-		return isValid;
-	}
-
 	componentDidMount()
 	{
 		if(!this.props.buildingBurger && this.props.authRedirectPath !== '/')
@@ -94,7 +72,7 @@ class Auth extends Component
 		const updatedControls = updateObject(this.state.controls, {
 			[controlName]: updateObject(this.state.controls[controlName], {
 				value: event.target.value,
-				valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+				valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
 				touched: true
 			})
 		});
