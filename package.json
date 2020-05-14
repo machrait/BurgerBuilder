@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "A burger builder application",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
+  },
   "devDependencies": {
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0"
