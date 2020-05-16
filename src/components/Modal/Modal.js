@@ -14,7 +14,10 @@ const modal = props => {
 	timeout={animationTiming}
 	mountOnEnter
 	unmountOnExit
-		classNames="alert">
+		classNames={{
+			enterActive: 'ModalOpen',
+			exitActive: 'ModalClosed'
+		}}>
 			
 					<div className="Modal">
 					<h1>A Modal</h1>

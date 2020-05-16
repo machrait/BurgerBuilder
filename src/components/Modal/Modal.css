@@ -50,11 +50,3 @@
 		transform: translateY(-100%);
     }
 }
-  .alert-enter-active {
-	animation: openModal 0.4s ease-out forwards
-  }
-  
-  .alert-exit-active {
-	animation: closeModal 1s ease-in forwards;
-  }
-  
