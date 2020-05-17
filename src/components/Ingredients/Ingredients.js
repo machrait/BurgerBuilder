@@ -9,7 +9,29 @@ const Ingredients = () =>
 	const [userIngredients, setUserIngredients] = useState([]);
 	const addIngredientHandler = ingredient =>
 	{
-		setUserIngredients(previngredients => [...previngredients, { id: Math.random().toString(), ...ingredient}]);
+		fetch('https://reacthooks-9a40e.firebaseio.com/ingredients.json',
+		{
+			method: 'POST',
+			body: JSON.stringify(ingredient),
+			headers: 
+			{
+				'Content-Type': 'application/json'
+			}
+		}).then(response =>
+		{
+			return response.json();
+		}).then(responseData =>
+		{	
+			setUserIngredients(previngredients => 
+			[	
+				...previngredients, 
+				{ 
+					id: responseData.name, 
+					...ingredient
+				}
+			]);
+		});
+		
 	}
 	return (	
 	<div className="App">
