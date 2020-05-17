@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useState } from 'react';
+import React, { useReducer, useCallback } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
@@ -20,16 +20,34 @@ const ingredientsReducer = (currentIngredients, action) =>
 	}
 };
 
+const httpReducer = (currHttpState, action) => 
+{
+	switch (action.type)
+	{
+		case 'SEND':
+			return  { loading: true, error: ''};
+		case 'RESPONSE':
+			return  { ...currHttpState, loading: false};
+		case 'ERROR':
+			return  { error: action.error, loading: false};
+		case 'CLEAR':
+			return  { ...currHttpState, error: ''};
+		default:
+			throw new Error('Should not happen!');
+	}
+};
+
 const Ingredients = () =>
 {
 	const [userIngredients, dispatch] = useReducer(ingredientsReducer, []);
 	//const [userIngredients, setUserIngredients] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState('');
+	const [httpState, dispatchHttp] = useReducer(httpReducer, {loading: false, error: ''});
+	//const [isLoading, setIsLoading] = useState(false);
+	//const [error, setError] = useState('');
 	
 	const addIngredientHandler = ingredient =>
 	{
-		setIsLoading(true);
+		dispatchHttp({type: 'SEND'});
 		fetch('https://reacthooks-9a40e.firebaseio.com/ingredients.json',
 		{
 			method: 'POST',
@@ -40,7 +58,7 @@ const Ingredients = () =>
 			}
 		}).then(response =>
 		{
-			setIsLoading(false);
+			dispatchHttp({type: 'RESPONSE'});
 			return response.json();
 		}).then(responseData =>
 		{	
@@ -61,6 +79,10 @@ const Ingredients = () =>
 					...ingredient
 				}
 			]);*/
+		}).catch(error =>
+		{
+			dispatchHttp({type: 'RESPONSE'});
+			dispatchHttp({type: 'ERROR', error: 'Something went wrong!'});
 		});
 		
 	}
@@ -73,33 +95,33 @@ const Ingredients = () =>
 
 	const removeIngredientsHandler = ingredientId =>
 	{
-		setIsLoading(true);
+		dispatchHttp({type: 'SEND'});
 		fetch(`https://reacthooks-9a40e.firebaseio.com/ingredients/${ingredientId}.json`,
 		{
 			method: 'DELETE'
 		}).then(response =>
 		{
-			setIsLoading(false);
+			dispatchHttp({type: 'RESPONSE'});
 			//setUserIngredients(prevIngredients => 
 			//	prevIngredients.filter(ingredient => ingredient.id !==  ingredientId));
 			dispatch({type: 'DELETE', id: ingredientId});
 		}).catch(error =>
 		{
-			setError('Something went wrong!');
-			setIsLoading(false);
+			dispatchHttp({type: 'RESPONSE'});
+			dispatchHttp({type: 'ERROR', error: 'Something went wrong!'});
 		});
 		
 	}
 
 	const closeErrorHandler = () =>
 	{
-		setError('');
+		dispatchHttp({type: 'CLEAR'});
 	}
 
 	return (	
 	<div className="App">
-		{error && <ErrorModal onClose={closeErrorHandler}>{error}</ErrorModal>}
-    	<IngredientForm onAddIngredient={addIngredientHandler} loading= {isLoading}/>
+		{httpState.error && <ErrorModal onClose={closeErrorHandler}>{httpState.error}</ErrorModal>}
+    	<IngredientForm onAddIngredient={addIngredientHandler} loading= {httpState.loading}/>
 
     	<section>
         	<Search onLoadIngredients={filteredIngredientsHandler}/>
