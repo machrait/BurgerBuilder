@@ -27,8 +27,8 @@ const Search = React.memo(props =>
 				});
 			}
 			onLoadIngredients(loadedIngredient);
-		}, [enteredFilter, onLoadIngredients]);
-	});
+		});
+	}, [enteredFilter, onLoadIngredients]);
 
 
 	return (
